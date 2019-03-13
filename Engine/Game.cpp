@@ -46,12 +46,15 @@ void Game::ComposeFrame()
 {
     auto x = wnd.mouse.GetPosX();
     auto y = wnd.mouse.GetPosY();
+    bool swap = wnd.kbd.KeyIsPressed(GLFW_KEY_SPACE);
     for (int i = 0; i < 20; ++i)
     {
         for (int j = 0; j < 20; ++j)
         {
-            gfx.PutPixel(std::clamp(x + i, 0, static_cast<int>(Graphics::ScreenWidth) - 1), std::clamp(y + j, 0, static_cast<int>(Graphics::ScreenHeight) - 1), 255, 0, 0);
-            gfx.PutPixel(std::clamp(x - i - 1, 0, static_cast<int>(Graphics::ScreenWidth) - 1), std::clamp(y - j - 1, 0, static_cast<int>(Graphics::ScreenHeight) - 1), Color(0, 0, 255));
+            gfx.PutPixel(std::clamp(x + i, 0, static_cast<int>(Graphics::ScreenWidth) - 1), std::clamp(y + j, 0, static_cast<int>(Graphics::ScreenHeight) - 1), 
+                swap ? 0 : 255, 0, swap ? 255 : 0);
+            gfx.PutPixel(std::clamp(x - i - 1, 0, static_cast<int>(Graphics::ScreenWidth) - 1), std::clamp(y - j - 1, 0, static_cast<int>(Graphics::ScreenHeight) - 1), 
+                Color(swap ? 255 : 0, 0, swap ? 0 : 255));
         }
     }
 }
