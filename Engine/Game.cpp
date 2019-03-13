@@ -21,6 +21,8 @@
 #include "MainWindow.h"
 #include "Game.h"
 
+#include <algorithm>
+
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
@@ -42,4 +44,14 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+    auto x = wnd.mouse.GetPosX();
+    auto y = wnd.mouse.GetPosY();
+    for (int i = 0; i < 20; ++i)
+    {
+        for (int j = 0; j < 20; ++j)
+        {
+            gfx.PutPixel(std::clamp(x + i, 0, static_cast<int>(Graphics::ScreenWidth) - 1), std::clamp(y + j, 0, static_cast<int>(Graphics::ScreenHeight) - 1), 255, 0, 0);
+            gfx.PutPixel(std::clamp(x - i - 1, 0, static_cast<int>(Graphics::ScreenWidth) - 1), std::clamp(y - j - 1, 0, static_cast<int>(Graphics::ScreenHeight) - 1), Color(0, 0, 255));
+        }
+    }
 }
